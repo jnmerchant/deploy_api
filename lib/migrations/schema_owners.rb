@@ -1,4 +1,4 @@
-require_relative 'environment'
+require_relative 'test_environment'
 
 class CreateOwnersTable < ActiveRecord::Migration[5.0]
   def up

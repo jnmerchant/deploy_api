@@ -1,10 +1,10 @@
-require_relative 'environment'
+require_relative 'test_environment'
 
 class CreatePetsTable < ActiveRecord::Migration[5.0]
   def up
     create_table :pets do |pet|
       pet.string :name
-      pet.string :type
+      pet.string :kind
       pet.integer :age
       pet.belongs_to :owner, :foreign_key => 'owner.id'
       pet.timestamps
