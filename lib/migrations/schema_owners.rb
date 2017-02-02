@@ -3,7 +3,7 @@ require_relative 'test_environment'
 class CreateOwnersTable < ActiveRecord::Migration[5.0]
   def up
     create_table :owners do |owner|
-      owner.string :name
+      owner.string :first_name
       owner.timestamps
     end
   end

@@ -6,7 +6,7 @@ class CreatePetsTable < ActiveRecord::Migration[5.0]
       pet.string :name
       pet.string :kind
       pet.integer :age
-      pet.belongs_to :owner, :foreign_key => 'owner.id'
+      pet.belongs_to :owner, foreign_key: 'owner.id'
       pet.timestamps
     end
   end

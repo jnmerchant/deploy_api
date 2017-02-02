@@ -5,17 +5,17 @@ require_relative '../lib/models/pet.rb'
 
 describe Owner do
   describe '#valid?' do
-    context 'when a owner has a name' do
+    context 'when a owner has a first name' do
       it 'returns true' do
-        owner = Owner.new(name: 'David')
+        owner = Owner.new(first_name: 'Billy')
 
         expect(owner.valid?).to eq true
       end
     end
 
-    context 'when a owner does not have a name' do
+    context 'when a owner does not have a first name' do
       it 'returns false' do
-        owner = Owner.new(name: '')
+        owner = Owner.new(first_name: '')
 
         expect(owner.valid?).to eq false
       end
@@ -24,7 +24,7 @@ describe Owner do
 
   describe '#create' do
     it 'returns a Owner object with an id' do
-      owner = Owner.create(name: 'Horace')
+      owner = Owner.create(first_name: 'Horace')
 
       expect(owner.id > 0).to eq true
     end
@@ -32,7 +32,7 @@ describe Owner do
 
   describe '#pets' do
     it 'returns pets' do
-      owner = Owner.create(name: 'Horace')
+      owner = Owner.create(first_name: 'Jeff')
       Pet.create(name: 'Dagger', kind: 'horse', age: 20, owner: owner)
       Pet.create(name: 'Ax', kind: 'dog', age: 5, owner: owner)
 
