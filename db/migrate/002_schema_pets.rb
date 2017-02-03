@@ -1,4 +1,4 @@
-class CreatePetsTable < ActiveRecord::Migration[5.0]
+class SchemaPets < ActiveRecord::Migration[5.0]
   def up
     create_table :pets do |pet|
       pet.string :name

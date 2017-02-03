@@ -1,4 +1,4 @@
-class CreateOwnersTable < ActiveRecord::Migration[5.0]
+class SchemaOwners < ActiveRecord::Migration[5.0]
   def up
     create_table :owners do |owner|
       owner.string :first_name
