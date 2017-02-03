@@ -1,5 +1,3 @@
-require_relative 'test_environment'
-
 class CreatePetsTable < ActiveRecord::Migration[5.0]
   def up
     create_table :pets do |pet|
@@ -15,11 +13,3 @@ class CreatePetsTable < ActiveRecord::Migration[5.0]
     drop_table :pets
   end
 end
-
-def main
-  action = (ARGV[0] || :up).to_sym
-
-  CreatePetsTable.migrate(action)
-end
-
-main if __FILE__ == $PROGRAM_NAME

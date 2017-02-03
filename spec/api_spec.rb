@@ -1,7 +1,5 @@
 require 'rack/test'
-require_relative '../api'
-require_relative '../lib/migrations/schema_owners'
-require_relative '../lib/migrations/schema_pets'
+require_relative '../api_owner'
 require 'pry'
 
 describe 'api' do
@@ -11,18 +9,10 @@ describe 'api' do
     Sinatra::Application
   end
 
-  before :all do
-    # CreatePetsTable.migrate(:down)
-    # CreateOwnersTable.migrate(:down)
-    # CreateOwnersTable.migrate(:up)
-    # CreatePetsTable.migrate(:up)
-  end
-
   describe '#get /owners' do
     it 'returns all owners' do
       get '/owners'
 
-      binding.pry
       expect(JSON.parse(last_response.body).first['first_name']).to eq 'Horace'
     end
   end
@@ -30,44 +20,41 @@ describe 'api' do
   describe '#get /owners/:id' do
     context 'when a valid owner id is entered' do
       it 'return an owner' do
-        get '/owners/1'
+        get '/owners/2'
 
-        # binding.pry
-        expect(JSON.parse(last_response.body)['name']).to eq 'Grover'
+        expect(JSON.parse(last_response.body)['first_name']).to eq 'Horace'
       end
     end
-  #
-  #     context 'when an invalid victim id is entered' do
-  #       it 'returns a not found status 404' do
-  #         get '/api/victims/999'
-  #
-  #         # binding.pry
-  #         expect(last_response.status).to eq 404
-  #       end
-  #     end
-    # end
-  #
-  #   describe '# get /api/victims?sort' do
-  #     context 'when a sort field is entered' do
-  #       it 'returns all victims sorted by field' do
-  #         get '/api/victims?sort=weapon_id'
-  #
-  #         # binding.pry
-  #         expect(JSON.parse(last_response.body).first['name']).to eq 'Ernie'
-  #       end
+
+    context 'when an invalid owner id is entered' do
+      it 'returns a not found status 404' do
+        get '/owners/999'
+
+        # binding.pry
+        expect(last_response.status).to eq 404
+      end
+    end
+  end
+
+  # describe '# get /owners/sort' do
+  #   context 'when a sort field is entered' do
+  #     it 'returns all owners sorted by field' do
+  #       get '/owners/sort/first_name'
+  #       binding.pry
+  #       expect(JSON.parse(last_response.body).first['first_name']).to eq 'Carl'
   #     end
   #   end
-  #
-  #   describe '#post /api/victims' do
-  #     context 'creating valid victim' do
-  #       it 'creates new victim' do
-  #         post '/api/victims?name=Carl&weapon_id=2'
-  #
-  #         # binding.pry
-  #         expect(JSON.parse(last_response.body)['name']).to eq 'Carl'
-  #       end
-  #     end
-  #   end
+  # end
+
+  describe '#post /owners' do
+    context 'creating valid owner' do
+      it 'creates new owner' do
+        post '/owners?first_name=Carl'
+
+        expect(JSON.parse(last_response.body)['first_name']).to eq 'Carl'
+      end
+    end
+  end
   #
   #   describe '#patch /api/victims/:id/:name' do
   #     context 'give valid id and new name' do
@@ -79,14 +66,14 @@ describe 'api' do
   #     end
   #   end
   #
-  #   describe '#delete /api/victims/:id' do
-  #     context 'give valid id' do
-  #       it 'deletes that victim' do
-  #         delete '/api/victims/1'
-  #
-  #         expect(Victim.find_by_id(1)).to eq nil
-  #       end
-  #     end
-  #   end
+  describe '#delete /owners/:id' do
+    context 'give valid id' do
+      it 'deletes the owner with that id' do
+        delete '/owners/1'
+
+        expect(Owner.find_by_id(1)).to eq nil
+      end
+    end
+  end
   # end
 end
