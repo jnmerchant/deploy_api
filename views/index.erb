@@ -1,0 +1,19 @@
+<html>
+  <header>
+    <title>We'll Make Great Pets</title>
+    <link href="<%= url('/pets_style.css') %>" rel="stylesheet" type="text/css" />
+  </header>
+
+  <body>
+    <h2>We'll Make Great Pets!</h2>
+
+    <% owners.each do |owner| %>
+      <div class='owner-display-tile'>
+        <p> Owner Name: <%= owner.first_name %> - Id: <%= owner.id %> </p>
+        <p>has <%= owner.pets.count %> pet(s).</p>
+        <a href='/owners/<%= owner.id %>/edit'>edit owner</a>
+      </div>
+    <% end %>
+    <h4><a href='/owners/create'>Create a new Owner</a></h4>
+  </body>
+</html>

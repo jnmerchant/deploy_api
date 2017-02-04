@@ -1,0 +1,15 @@
+<html>
+  <header>
+    <title>We'll Make Great Pets</title>
+    <link href="<%= url('/pets_style.css') %>" rel="stylesheet" type="text/css" />
+  </header>
+
+  <body
+    <form action='/owners/<%= owner.id %>' method='post' class='centered'>
+      <label>First Name</label>
+      <input type='text' name='first_name' required value='<%= owner.first_name %>' />
+      <input type='hidden' name='_method' value='put'>
+      <input type='submit' value='edit owner' />
+    </form>
+  </body>
+</html>
