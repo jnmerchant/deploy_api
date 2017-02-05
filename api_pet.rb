@@ -16,45 +16,32 @@ after do
   ActiveRecord::Base.connection.close
 end
 
-get '/pets' do
-  pets = Pet.all
-  pets.to_json
-end
-
-get '/pets/sort/:sort' do
-  sort = params['sort'] || 'id'
-  Pet.order(sort).to_json
-end
-
-get '/pets/:id' do |id|
-  pet = Pet.find_by_id(id)
-  halt(404, {message: "Pet not found"}.to_json) unless pet
-  pet.to_json
-end
-
 post '/pets' do
-  pet = Pet.new(name: params[:name], kind: params[:kind], age: params[:age],
-    owner_id: params[:owner_id])
-  if pet.valid?
-    pet.save
-    [201, pet.to_json]
-  else
-    status 400
-  end
+   new_pet = Pet.new
+   new_pet.name = params[:name]
+   new_pet.kind = params[:kind]
+   new_pet.age = params[:age]
+   new_pet.owner_id = params[:owner_id]
+   new_pet.save
+   redirect('/')
+ end
+
+get '/pets/:id/edit'  do
+  pet = Pet.find(params[:id])
+  erb(:edit_pet, locals: { pet: pet })
 end
 
-put '/pets/:id' do |id|
-  pet = Pet.find(id)
-  existing_desc = pet.name
-  halt(404, { message:'Pet not found'}.to_json) unless pet
-  pet.update(name: params[:name])
-  pet.to_json
+put '/pets/:id' do
+  pet = Pet.find(params[:id])
+  pet.name = params[:name]
+  pet.kind = params[:kind]
+  pet.age = params[:age]
+  pet.save
+  redirect('/')
 end
 
-delete '/pets/:id' do |id|
-  if ! Pet.exists?(id)
-    status 404
-  else
-    Pet.destroy(id)
-  end
-end
+delete '/pets' do
+   pet_to_delete = Pet.find(params[:pet_id])
+   pet_to_delete.destroy
+   redirect('/')
+ end

@@ -16,44 +16,40 @@ after do
   ActiveRecord::Base.connection.close
 end
 
-get '/owners' do
-  owners = Owner.all
-  owners.to_json
-end
+get '/' do
+   owners = Owner.all
+   erb(:index, locals: { owners: owners } )
+ end
 
-get '/owners/sort/:sort' do
-  sort = params['sort'] || 'id'
-  Owner.order(sort).to_json
-end
-
-get '/owners/:id' do |id|
-  owner = Owner.find_by_id(id)
-  halt(404, {message: "Owner not found"}.to_json) unless owner
-  owner.to_json
+get '/owners/create' do
+ erb(:create_owner)
 end
 
 post '/owners' do
-  owner = Owner.new(first_name: params[:first_name])
-  if owner.valid?
-    owner.save
-    [201, owner.to_json]
-  else
-    status 400
-  end
+  new_owner = Owner.new
+  new_owner.first_name = params[:first_name]
+  new_owner.save
+  redirect '/'
 end
 
-put '/owners/:id' do |id|
-  owner = Owner.find(id)
-  existing_desc = owner.first_name
-  halt(404, { message:'Owner not found'}.to_json) unless owner
-  owner.update(first_name: params[:first_name])
-  owner.to_json
+get '/owners/:id/edit' do
+  owner = Owner.find(params[:id])
+  erb(:edit_owner, locals: { owner: owner } )
 end
 
-delete '/owners/:id' do |id|
-  if ! Owner.exists?(id)
-    status 404
+put '/owners/:id' do
+  owner = Owner.find(params[:id])
+  owner.first_name = params[:first_name]
+  owner.save
+  redirect '/'
+end
+
+delete('/owners/:id') do
+  owner = Owner.find(params[:id])
+  if owner.pets.count > 0
+    halt 400
   else
-    Owner.destroy(id)
+   owner.destroy
   end
+  redirect('/')
 end
