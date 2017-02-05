@@ -1,0 +1,19 @@
+<html>
+  <header>
+    <title>Edit Pet</title>
+    <link href="<%= url('/pets_style.css') %>" rel="stylesheet" type="text/css" />
+  </header>
+
+  <body>
+    <h3>Edit a pet</h3>
+    <h4><a href='/'>Owners</a></h4>
+    <form action='/pets/<%= pet.id %>' method='post' class='centered'>
+      <label>Pet</label>
+      <input type='text' name='name' required value='<%= pet.name %>' />
+      <input type='text' name='kind' required value='<%= pet.kind %>' />
+      <input type='text' name='age' required value='<%= pet.age %>' />
+      <input type='hidden' name='_method' value='put'>
+      <button type='submit'>Save Edit</button>
+    </form>
+  </body>
+</html>

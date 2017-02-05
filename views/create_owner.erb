@@ -1,24 +1,15 @@
 <html>
-  <head>
-    <title>Owners</title>
-    <style>
-      p, h1, h2, h3, h4, ul, li, a, label {
-        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-        color: #157DA6;
-        text-align: center;
-      }
-      .centered {
-        text-align: center;
-      }
-    </style>
-  </head>
+  <header>
+    <title>Create Owner</title>
+    <link href="<%= url('/pets_style.css') %>" rel="stylesheet" type="text/css" />
+  </header>
+
   <body>
     <h3>Create a new owner</h3>
     <h4><a href='/'>All Owners</a></h4>
     <form action='/owners' method='POST' class='centered'>
-      <label>First Name</label>
-      <input type='text' name='first_name' required/>
-      <input type='submit' value='Create new Owner' />
+      <input type='text' name='first_name' placeholder="Owner's Name" required/>
+      <input type='submit' value='Create New Owner' />
     </form>
   </body>
 </html>

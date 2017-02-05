@@ -6,14 +6,39 @@
 
   <body>
     <h2>We'll Make Great Pets!</h2>
-
+    <h4><a href='/owners/create'>Create a New Owner</a></h4>
     <% owners.each do |owner| %>
       <div class='owner-display-tile'>
-        <p> Owner Name: <%= owner.first_name %> - Id: <%= owner.id %> </p>
-        <p>has <%= owner.pets.count %> pet(s).</p>
-        <a href='/owners/<%= owner.id %>/edit'>edit owner</a>
+        <form action='/owners/<%= owner.id %>' method='POST' class='pull-right'>
+          <input type='hidden' name='_method' value='DELETE'/>
+          <button class='super-sport'type='submit'>Delete Owner</button>
+        </form>
+
+        <p class='owner-name'><%= owner.first_name %> has <%= owner.pets.count %> pet(s).</p>
+          <% owner.pets.each do |pet| %>
+            <div class='pets'><%= pet.name %> is a <%= pet.kind %>
+               who is <%= pet.age %> years old.
+            <button class='edit-button'><a href='/pets/<%= pet.id %>/edit'>
+              Edit</a></button>
+            <form action='/pets' method='POST' class='inline' >
+              <input type='hidden' name='pet_id' value='<%= pet.id %>'>
+              <input type='hidden' name='_method' value='DELETE'>
+              <input type='submit' value='Delete' class='edit-button'>
+            </form>
+            </div>
+          <% end %>
+
+        <form action='/pets' method='POST' class='centered-input' >
+          <input type='text' name='name' placeholder="name" required />
+          <input type='text' name='kind' placeholder="kind of pet" required />
+          <input type='text' name='age' placeholder="age" required />
+          <input type='hidden' name='owner_id' value='<%= owner.id %>'>
+          <input type='submit' value='Add Pet' class='super-sport'>
+        </form>
+
+        <button type='submit' class='super-sport'><a href='/owners/<%= owner.id %>/edit'>Edit Owner</a>
+        </button>
       </div>
     <% end %>
-    <h4><a href='/owners/create'>Create a new Owner</a></h4>
   </body>
 </html>
