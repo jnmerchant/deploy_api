@@ -47,9 +47,9 @@ end
 delete('/owners/:id') do
   owner = Owner.find(params[:id])
   if owner.pets.count > 0
-    halt 400
+    redirect '/'
   else
    owner.destroy
   end
-  redirect('/')
+  redirect '/'
 end
